@@ -20,9 +20,20 @@ game_Sounds = {
 
 #declared the global variables for the player/background/pipe png file
 
-player = '/gallery/sprites/bird.png'     
-backGround = '/gallery/sprites/background.png'
-pipe = '/gallery/sprites/pipe.png'
+player = 'gallery/sprites/bird.png'     
+backGround = 'gallery/sprites/background.png'
+pipes = (
+    'gallery/sprites/pipe_green.png',
+    'gallery/sprites/pipe_red.png',
+)
+
+def welcomeScreen:
+    
+    playerx= int(screenWidth/5)
+    playery= int(screenHeight - game_Sprites['player'].get_height())/2
+    messagex = int(screenWidth - game_Sprites['message'].get_width())/2
+    
+    pass
 
 if __name__ == "__main__":
     
@@ -43,6 +54,32 @@ if __name__ == "__main__":
         pygame.image.load('gallery/sprites/9.png').convert_alpha(),
     )
 
+    game_Sprites['message'] = pygame.image.load('gallery/sprites/message.png').convert_alpha()
+    
+    pipeId = random.randint(0,len(pipes)-1) #to randomly select different types of piples
+    
+    game_Sprites['pipe'] = (
+        pygame.transform.rotate(pygame.image.load(pipes[pipeId]).convert_alpha(),180), # transform rotate is to rotate the pipes by 180 degree
+        pygame.image.load(pipes[pipeId]).convert_alpha() 
+    )
+    
+    #adding background and player image to sprites
+    
+    game_Sprites['background'] = pygame.image.load(backGround).convert() 
+    game_Sprites['player'] = pygame.image.load(player).convert_alpha()
+    
+    
+    game_Sounds['die'] = pygame.mixer.Sound('gallery/audio/die.wav')
+    game_Sounds['hit'] = pygame.mixer.Sound('gallery/audio/hit.wav')
+    game_Sounds['point'] = pygame.mixer.Sound('gallery/audio/point.wav')
+    game_Sounds['swoosh'] = pygame.mixer.Sound('gallery/audio/swoosh.wav')
+    game_Sounds['wing'] = pygame.mixer.Sound('gallery/audio/wing.wav')
+    
+    
 
 
+
+    while True:
+        welcomeScreen()
+        mainGame()
 
