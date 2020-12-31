@@ -27,13 +27,30 @@ pipes = (
     'gallery/sprites/pipe_red.png',
 )
 
-def welcomeScreen:
+def welcomeScreen():
     
     playerx= int(screenWidth/5)
-    playery= int(screenHeight - game_Sprites['player'].get_height())/2
-    messagex = int(screenWidth - game_Sprites['message'].get_width())/2
-    
-    pass
+    playery= int((screenHeight - game_Sprites['player'].get_height())/2)
+    messagex = int((screenWidth - game_Sprites['message'].get_width())/2)
+    messagey = int(screenHeight*0.13)
+    basex=0
+    while True:
+        for event in pygame.event.get():      #event.get() fetches the events from the user
+            if event.type == QUIT or (event.type == KEYDOWN and event.type == K_ESCAPE):
+                pygame.quit()
+                sys.exit()
+            
+            elif event.type == KEYDOWN and (event.type==K_SPACE or event.type == K_UP):
+                return 
+                
+            else:
+                screen.blit(game_Sprites['background'], (0, 0))    
+                screen.blit(game_Sprites['player'], (playerx, playery))    
+                screen.blit(game_Sprites['message'], (messagex,messagey ))    
+                screen.blit(game_Sprites['base'], (basex, groundY))    
+                pygame.display.update()
+                fpsClock.tick(FPS)
+
 
 if __name__ == "__main__":
     
@@ -76,9 +93,6 @@ if __name__ == "__main__":
     game_Sounds['wing'] = pygame.mixer.Sound('gallery/audio/wing.wav')
     
     
-
-
-
     while True:
         welcomeScreen()
         mainGame()
