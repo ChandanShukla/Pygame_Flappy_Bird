@@ -15,12 +15,24 @@ groundY = screenHeight*0.8
 game_Sprites = {}
 
 game_Sounds = {
-    
 }
 
 #declared the global variables for the player/background/pipe png file
 
-player = 'C:/Users/DELL-PC/Documents/GitHub/Pygame_Tetris/gallery/sprites/bird.png'     
+player = (
+    'C:/Users/DELL-PC/Documents/GitHub/Pygame_Tetris/gallery/sprites/yellowbird.png',
+    'C:/Users/DELL-PC/Documents/GitHub/Pygame_Tetris/gallery/sprites/bird.png',
+    'C:/Users/DELL-PC/Documents/GitHub/Pygame_Tetris/gallery/sprites/bluebird.png',
+    
+)    
+
+playerId = random.randint(0,len(player)-1) #to randomly select different types of piples
+    
+game_Sprites['player'] = (
+    pygame.image.load(player[0]).convert_alpha(), # transform rotate is to rotate the pipes by 180 degree
+    pygame.image.load(player[1]).convert_alpha(),
+    pygame.image.load(player[2]).convert_alpha(),
+)
 backGround = 'C:/Users/DELL-PC/Documents/GitHub/Pygame_Tetris/gallery/sprites/background.png'
 pipes = (
     'C:/Users/DELL-PC/Documents/GitHub/Pygame_Tetris/gallery/sprites/pipe_green.png',
@@ -30,7 +42,7 @@ pipes = (
 def welcomeScreen():
     
     playerx= int(screenWidth/5)
-    playery= int((screenHeight - game_Sprites['player'].get_height())/2)
+    playery= int((screenHeight - game_Sprites['player'][playerId].get_height())/2)
     messagex = int((screenWidth - game_Sprites['message'].get_width())/2)
     messagey = int(screenHeight*0.13)
     basex=0
@@ -45,7 +57,7 @@ def welcomeScreen():
                 
             else:
                 screen.blit(game_Sprites['background'], (0, 0))    
-                screen.blit(game_Sprites['player'], (playerx, playery))    
+                screen.blit(game_Sprites['player'][playerId], (playerx, playery))    
                 screen.blit(game_Sprites['message'], (messagex,messagey ))    
                 screen.blit(game_Sprites['base'], (basex, groundY))    
                 pygame.display.update()
@@ -83,7 +95,8 @@ if __name__ == "__main__":
     #adding background and player image to sprites
     
     game_Sprites['background'] = pygame.image.load(backGround).convert() 
-    game_Sprites['player'] = pygame.image.load(player).convert_alpha()
+    
+    
     
     
     game_Sounds['die'] = pygame.mixer.Sound('C:/Users/DELL-PC/Documents/GitHub/Pygame_Tetris/gallery/audio/die.wav')
