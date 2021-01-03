@@ -26,6 +26,8 @@ player = (
     
 )    
 
+file=open('C:/Users/DELL-PC/Documents/GitHub/Pygame_Tetris/Highscore.txt','r+')
+
  #to randomly select different types of piples
     
 game_Sprites['player'] = (
@@ -97,7 +99,7 @@ def mainGame():
 
     playerFlapAccv = -8 # velocity while flapping
     playerFlapped = False # It is true only when the bird is flapping
-
+    
 
     while True:
         for event in pygame.event.get():
@@ -113,6 +115,7 @@ def mainGame():
 
         crashTest = isCollide(playerx, playery, upperPipes, lowerPipes) # This function will return true if the player is crashed
         if crashTest:
+            file.write(str(score))
             return     
 
         #check for score
@@ -170,6 +173,7 @@ def mainGame():
         fpsClock.tick(FPS)
 
 def isCollide(playerx, playery, upperPipes, lowerPipes):
+    
     if playery> groundY - 25  or playery<0:
         game_Sounds['hit'].play()
         return True
